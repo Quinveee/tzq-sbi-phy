@@ -1,14 +1,14 @@
-tmp_dir: "/data/atlas/users/amartine/experiment_so_cht/share"
+tmp_dir: "/data/atlas/users/qvanenge/experiment_so_cht/share"
 log_dir: "logs/experiment_so_cht"
 
 # 1. Setup
-setup_dir: "/data/atlas/users/amartine/experiment_so_cht/setup"
+setup_dir: "/data/atlas/users/qvanenge/experiment_so_cht/setup"
 setup_file: "setup.h5"
 setup_conf: "conf/experiment_so_cht/benchmarks.yml"
 
 # 2. Event generation
-processes_dir: "/data/atlas/users/amartine/experiment_so_cht/processes"
-mg_dir: "/project/atlas/users/amartine/Tools/MG5_aMC_v3_5_1"
+processes_dir: "/data/atlas/users/qvanenge/experiment_so_cht/processes"
+mg_dir: "/data/atlas/users/qvanenge/Tools/MG5_aMC_v3_5_1"
 
 processes:
   - cards_dir: "cards/experiment_so_cht/tzq"
@@ -71,22 +71,154 @@ processes:
     runs: 12
     n_subprocesses: 6
 
+  # ------------------------------------------------------
+  # ttZ decay - tzq
+  # ------------------------------------------------------
+  - cards_dir: "cards/experiment_so_cht/tzq"
+    proc_card: "proc_card_mg5_sm_ttZ_wdecay.dat"
+    run_card: "run_card_signal_large.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    reweight_card_insert: "cards/experiment_so_cht/tzq/reweight_card_insert_tdecay.dat"
+    runs: 12
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht/tzq"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_1"
+    reweight_card_insert: "cards/experiment_so_cht/tzq/reweight_card_insert_tdecay.dat" # ?? 
+    runs: 12
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht/tzq"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_2"
+    reweight_card_insert: "cards/experiment_so_cht/tzq/reweight_card_insert_tdecay.dat" # ??
+    runs: 12
+    n_subprocesses: 6
+
+  # ------------------------------------------------------
+  # ttZ decay - tbarzq
+  # ------------------------------------------------------
+  - cards_dir: "cards/experiment_so_cht/tbarzq"
+    proc_card: "proc_card_mg5_sm_ttZ_wdecay.dat"
+    run_card: "run_card_signal_large.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    reweight_card_insert: "cards/experiment_so_cht/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 12
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht/tbarzq"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_1"
+    reweight_card_insert: "cards/experiment_so_cht/tbarzq/reweight_card_insert_tdecay.dat" # ?? 
+    runs: 12
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht/tbarzq"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_2"
+    reweight_card_insert: "cards/experiment_so_cht/tbarzq/reweight_card_insert_tdecay.dat" # ??
+    runs: 12
+    n_subprocesses: 6
+
+  # ------------------------------------------------------
+  # tWZ decay - tzq
+  # ------------------------------------------------------
+  - cards_dir: "cards/experiment_so_cht/tzq"
+    proc_card: "proc_card_mg5_sm_tWZ_wdecay.dat"
+    run_card: "run_card_signal_large.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    reweight_card_insert: "cards/experiment_so_cht/tzq/reweight_card_insert_tdecay.dat"
+    runs: 12
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht/tzq"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_1"
+    reweight_card_insert: "cards/experiment_so_cht/tzq/reweight_card_insert_tdecay.dat" # ?? 
+    runs: 12
+    n_subprocesses: 6
+  
+  - cards_dir: "cards/experiment_so_cht/tzq"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_2"
+    reweight_card_insert: "cards/experiment_so_cht/tzq/reweight_card_insert_tdecay.dat" # ??
+    runs: 12
+    n_subprocesses: 6
+
+  # ------------------------------------------------------
+  # tWZ decay - tbarzq
+  # ------------------------------------------------------
+  - cards_dir: "cards/experiment_so_cht/tbarzq"
+    proc_card: "proc_card_mg5_sm_tWZ_wdecay.dat"
+    run_card: "run_card_signal_large.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    reweight_card_insert: "cards/experiment_so_cht/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 12
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_1"
+    reweight_card_insert: "cards/experiment_so_cht/tbarzq/reweight_card_insert_tdecay.dat" # ?? 
+    runs: 12
+    n_subprocesses: 6
+  
+  - cards_dir: "cards/experiment_so_cht/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_2"
+    reweight_card_insert: "cards/experiment_so_cht/tbarzq/reweight_card_insert_tdecay.dat" # ??
+    runs: 12
+    n_subprocesses: 6
+
 # Delphes 
 delphes_card: "cards/experiment_so_cht/delphes_card_ATLAS.dat"
-delphes_dir: "/project/atlas/users/amartine/Tools/MG5_aMC_v3_5_1/Delphes"
-ld_library_path: "/data/atlas/users/amartine/.micromamba/envs/madgraph/lib:$LD_LIBRARY_PATH"
-root_files_dir: "/dcache/atlas/higgs/EFT/amartine/experiment_so_cht"
+delphes_dir: "/data/atlas/users/qvanenge/Tools/MG5_aMC_v3_5_1/Delphes"
+ld_library_path: "/data/atlas/users/qvanenge/.micromamba/envs/madgraph/lib:$LD_LIBRARY_PATH"
+root_files_dir: "/data/atlas/users/qvanenge/experiment_so_cht/root_files"
 
 # Analysis
 observables: "conf/experiment_so_cht/observables.yml"
-h5_dir: "/data/atlas/users/amartine/experiment_so_cht/h5"
+h5_dir: "/data/atlas/users/qvanenge/experiment_so_cht/h5"
 
 # Augmentation
 augmentation: 
-  outdir: "/data/atlas/users/amartine/experiment_so_cht/samples"
+  outdir: "/data/atlas/users/qvanenge/experiment_so_cht/samples"
   theta0: "sampling.random_morphing_points(1000,[('gaussian',0.0,0.5)])"
   theta1: "sampling.benchmark('sm')"
   theta_test: "sampling.benchmark('sm')"
-  n_samples: 500000
-  n_samples_test: 1000
+  n_samples: 500000 # 500000
+  n_samples_test: 1000 # 1000
   nproc: 1 # Multicore does not work

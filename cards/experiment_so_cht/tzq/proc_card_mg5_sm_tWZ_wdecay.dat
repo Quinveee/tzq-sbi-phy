@@ -1,0 +1,20 @@
+import model SMEFTsim_top_MwScheme_UFO-massless
+
+set group_subprocesses False
+define wdec = l+ l- vl vl~ j
+
+generate p p > t~ w+ z QCD=1 QED=4 NP=0, 
+(t~ > w- b~ NP=0, w- > wdec NP=0), 
+(w+ > wdec NP=0), 
+(z > l+ l- NP=0) @0
+
+NPprop=0
+SMHLOOP=0
+
+add process p p > t w- z QCD=1 QED=4 NP=0, 
+(t > w+ b NP=0, w+ > wdec NP=0), 
+(w- > wdec NP=0), 
+(z > l+ l- NP=0) @1
+
+NPprop=0
+SMHLOOP=0

@@ -2,6 +2,10 @@
 
 set -euo pipefail
 
+# Activate conda environment with absolute path
+eval "$(/data/atlas/users/qvanenge/miniforge/bin/conda shell.bash hook)"
+conda activate madminer
+
 EVENTS_FILE="$1"
 OUTDIR="$2"
 THETA0="$3"
@@ -13,6 +17,8 @@ N_PROC="$8"
 LOG_DIR="$9"/augmentation.log
 
 mkdir -p $OUTDIR
+
+TMP=$(mktemp -d)
 
 cp -v $EVENTS_FILE $TMP/events.h5
 

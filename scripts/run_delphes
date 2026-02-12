@@ -2,6 +2,10 @@
 
 set -euo pipefail
 
+# Activate conda environment with absolute path
+eval "$(/data/atlas/users/qvanenge/miniforge/bin/conda shell.bash hook)"
+conda activate madminer
+
 NGEN="$1"
 DELPHES_DIR="$2"
 LD_LIBRARY_PATH="$3"
@@ -23,6 +27,7 @@ mkdir -p $ROOT_FILE_DIR
 # Then transfer only .root files (and lhe files) to a process dir in /dcache
 # Use 'environment' in submit files instead of passing variables as script arguments...
 
+TMP="$TEMPDIR"/tmp_delphes_$NGEN
 PROC_DIR_TMP=$TMP/mgprocess
 ROOT_DIR_TMP=$TMP/rootfiles
 

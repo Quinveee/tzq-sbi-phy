@@ -1,4 +1,4 @@
-./madminer-cli
-./madminer-dag
+-e ./madminer-cli
+-e ./madminer-dag
 git+https://github.com/arturoam00/madminer.git
 
