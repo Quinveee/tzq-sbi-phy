@@ -2,52 +2,21 @@
 
 set -euo pipefail
 
-# Activate conda environment
-eval "$(/data/atlas/users/qvanenge/miniforge/bin/conda shell.bash hook)"
-conda activate madminer
-
 NGEN="$1"
 TEMPDIR="$2"
 MG_DIR="$3"
 LOG_DIR="$4"
 
+TMP="$TEMPDIR/$NGEN"
+
 FILENAME="$TEMPDIR"/procdir."$NGEN".tmp
 PROC_DIR=$(cat $FILENAME | awk '{print $1}')
 
-# Create Cards directory - required by MadMiner's auto-generated run scripts
-mkdir -p "$PROC_DIR"/Cards
+mkdir -p "$TMP"
+cp -rv $PROC_DIR/* $TMP
 
-# Fix Fortran format strings for gfortran 14+ compatibility
-# This must run BEFORE MG5 compiles the Fortran code
-echo "Applying Fortran compatibility fixes for gfortran 14+..."
-find "$PROC_DIR/SubProcesses" -name "symmetry.f" -type f 2>/dev/null | while read -r file; do
-    if [ -f "$file" ]; then
-        # Replace non-standard format descriptors with standard Fortran 2003 advance='no'
-        sed -i "s/'\\\$)'/')'/" "$file"
-        sed -i "s/(a\\\$)/(a)',advance='no/" "$file"
-        sed -i "s/write(\*,formstr)/write(*,formstr,advance='no')/" "$file"
-        echo "  Fixed: $file"
-    fi
-done
+mkdir -p $TMP/Cards
 
+"$TMP"/madminer/run.sh $MG_DIR $TMP $LOG_DIR
 
-# Run MG5 - pass PROC_DIR as the process directory (parent of madminer/)
-"$PROC_DIR"/madminer/run.sh $MG_DIR "$PROC_DIR" $LOG_DIR
-
-# #!/bin/bash
-
-# set -euo pipefail
-
-# NGEN="$1"
-# TEMPDIR="$2"
-# MG_DIR="$3"
-# LOG_DIR="$4"
-
-# FILENAME="$TEMPDIR"/procdir."$NGEN".tmp
-# PROC_DIR=$(cat $FILENAME | awk '{print $1}')
-
-# cp -rv $PROC_DIR/* $TMP
-
-# "$TMP"/madminer/run.sh $MG_DIR $TMP $LOG_DIR
-
-# cp -rfv $TMP/* $PROC_DIR
+cp -rfv $TMP/* $PROC_DIR

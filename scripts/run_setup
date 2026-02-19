@@ -1,8 +1,4 @@
 #!/bin/bash
-
-# Activate conda environment
-source /data/atlas/users/qvanenge/miniforge/bin/activate madminer
-
 set -euo pipefail
 
 INFILE="$1"

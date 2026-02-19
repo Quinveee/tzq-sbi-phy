@@ -6,7 +6,7 @@ arguments               = $(SETUP_FILE) $(CARDS_DIR) $(PROC_DIR).$(cluster).$(pr
 
 request_cpus            = 2
 request_disk            = 2GB
-request_memory          = 1GB
+request_memory          = 8GB
 
 log                     = $(LOG_DIR)/prepare_generation.log
 output                  = $(LOG_DIR)/prepare_generation.out

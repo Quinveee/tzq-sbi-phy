@@ -1,0 +1,7 @@
+import model SMEFTsim_top_MwScheme_UFO-massless
+define wdec = u u~ c c~ d d~ s s~ l- l- vl vl~
+
+# with -massless b is not in proton, leading to an inability to generate, so;
+define p = g u c d s b u~ c~ d~ s~ b~
+
+generate p p > t~ w+ l+ l- QCD=1 QED=4 NP=1, (t~ > w- b~ NP=0, w- > wdec wdec NP=0), (w+ > wdec wdec NP=0) @0 NPprop=0 SMHLOOP=0

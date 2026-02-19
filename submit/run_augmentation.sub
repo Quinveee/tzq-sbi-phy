@@ -3,7 +3,7 @@ arguments               = $(EVENTS_FILE) $(OUTDIR) $(THETA0) $(THETA1) $(THETA_T
 
 request_cpus            = $(NPROC)
 request_disk            = 4GB
-request_memory          = 4GB
+request_memory          = 16GB
 
 log                     = $(LOG_DIR)/run_augmentation.log
 output                  = $(LOG_DIR)/run_augmentation.out

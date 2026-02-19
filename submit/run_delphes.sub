@@ -8,7 +8,7 @@ arguments               = $(NGEN) $(DELPHES_DIR) $(LD_LIBRARY_PATH) $(TMP_DIR) $
 
 request_cpus            = 2
 request_disk            = 20GB
-request_memory          = 1GB
+request_memory          = 32GB
 
 log                     = $(LOG_DIR)/run_delphes.log
 output                  = $(LOG_DIR)/run_delphes.out

@@ -2,10 +2,6 @@
 
 set -euo pipefail
 
-# Activate conda environment with absolute path
-eval "$(/data/atlas/users/qvanenge/miniforge/bin/conda shell.bash hook)"
-conda activate madminer
-
 SETUP_FILE="$1"
 CARDS_DIR="$2"
 PROC_DIR="$3" 
@@ -16,10 +12,6 @@ PYTHIA_CARD="$7"
 BENCHMARK="$8"
 MGDIR="$9"
 LOG_FILE="${10}"/gen.log
-
-# Create temporary directory for MG5 process generation
-TMP=$(mktemp -d)
-trap "rm -rf $TMP" EXIT
 
 mkdir -p $PROC_DIR
 

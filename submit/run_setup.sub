@@ -3,7 +3,7 @@ arguments               = $(SETUP_CONF) $(SETUP_FILE) $(LOG_DIR)
 
 request_cpus            = 1
 request_disk            = 500M
-request_memory          = 1024M
+request_memory          = 4GB
 
 log                     = $(LOG_DIR)/run_setup.log
 output                  = $(LOG_DIR)/run_setup.out

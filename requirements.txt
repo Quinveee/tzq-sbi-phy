@@ -2,3 +2,8 @@
 -e ./madminer-dag
 git+https://github.com/arturoam00/madminer.git
 
+Python 3.10
+madminer 0.9.x
+numpy < 2.3
+scipy 1.15.x
+

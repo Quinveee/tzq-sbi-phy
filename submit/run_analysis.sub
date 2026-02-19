@@ -6,7 +6,7 @@ arguments               = $(NGEN) $(OBSERVABLES) $(SETUP_FILE) $(H5_DIR) $(TMP_D
 
 request_cpus            = 2
 request_disk            = 8GB
-request_memory          = 1GB
+request_memory          = 16GB
 
 log                     = $(LOG_DIR)/run_analysis.log
 output                  = $(LOG_DIR)/run_analysis.out
