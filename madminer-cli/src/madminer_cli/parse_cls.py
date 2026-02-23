@@ -64,6 +64,8 @@ class AugmentationArgs:
     n_samples: int
     n_samples_test: int
     nproc: Optional[int]
+    validation_split: float = 0.0
+    test_split: float = 0.2
 
 
 Args = Union[SetupArgs, GenArgs, DelphesArgs, AugmentationArgs, AnalysisArgs]

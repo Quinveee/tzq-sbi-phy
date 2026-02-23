@@ -5,9 +5,11 @@ set -euo pipefail
 H5_DIR="$1"
 LOG_DIR="$2"
 
-PARENT=$(dirname $H5_DIR)
-EXPERIMENT=$(basename $PARENT)
+EXPERIMENT_DIR=$(dirname $(dirname $H5_DIR))
+EXPERIMENT=$(basename $EXPERIMENT_DIR)
+SAMPLES=$(basename $H5_DIR)
 
 mkdir -p $LOG_DIR
+mkdir -p "$EXPERIMENT_DIR/$SAMPLES"
 
-combine_and_shuffle $H5_DIR/* "$PARENT/$EXPERIMENT.h5" > "$LOG_DIR"/PRE_run_augmentation.log 2>&1
+combine_and_shuffle $H5_DIR/* "$EXPERIMENT_DIR/$SAMPLES/$EXPERIMENT.h5" > "$LOG_DIR"/PRE_run_augmentation.log 2>&1

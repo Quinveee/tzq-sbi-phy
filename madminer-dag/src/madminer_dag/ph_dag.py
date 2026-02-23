@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import shutil
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from madminer_dag.dag import DAG
 from madminer_dag.node import Node
@@ -69,33 +69,99 @@ class PhDAG(DAG):
         self.add_node(node, from_parent=parent_node)
         return node
 
-    def add_run_analysis(self, parent_node: Optional[Node] = None, **kwds) -> Node:
-        node = Node(name=f"RUN_ANALYSIS_{self.id}", script="submit/run_analysis.sub")
-        node.add_vars({"ngen": self.id})
+    def add_run_analysis(
+        self,
+        parent_node: Optional[Node] = None,
+        observables_override: Optional[str] = None,
+        h5_dir_override: Optional[str] = None,
+        suffix: str = "",
+        **kwds,
+    ) -> Node:
+        name = f"RUN_ANALYSIS{suffix}_{self.id}"
+        node = Node(name=name, script="submit/run_analysis.sub")
+        vars = {"ngen": self.id}
+        if observables_override:
+            vars["OBSERVABLES"] = observables_override
+        if h5_dir_override:
+            vars["H5_DIR"] = h5_dir_override
+        node.add_vars(vars)
         self.add_node(node, from_parent=parent_node)
         return node
 
-    def add_from_phase(self, phase: PhPhases, **kwds) -> None:
+    def add_run_analysis_both(
+        self,
+        parent_node: Optional[Node],
+        observables_features: str,
+        h5_dir_features: str,
+        observables_particles: str,
+        h5_dir_particles: str,
+    ) -> List[Node]:
+        """Add two parallel analysis nodes (features + particles) after parent."""
+        features_node = self.add_run_analysis(
+            parent_node=parent_node,
+            observables_override=observables_features,
+            h5_dir_override=h5_dir_features,
+            suffix="_FEATURES",
+        )
+        particles_node = self.add_run_analysis(
+            parent_node=parent_node,
+            observables_override=observables_particles,
+            h5_dir_override=h5_dir_particles,
+            suffix="_PARTICLES",
+        )
+        return [features_node, particles_node]
+
+    def add_from_phase(self, phase: PhPhases, both_conf: Optional[Dict] = None, **kwds) -> None:
         if phase not in self.phases:
             raise ValueError(
                 f"Invalid phase: {phase}. Valid phases are: {self.phases.keys()}"
             )
+        # Run all phases up to (but not including) RUN_ANALYSIS normally
         parent_node = self.phases[phase](parent_node=None, **kwds)
-        for i in range(phase + 1, max(self.phases) + 1):
+        for i in range(phase + 1, PhPhases.RUN_ANALYSIS):
             node = self.phases[i](parent_node=parent_node, **kwds)  # type: ignore
             parent_node = node
 
+        # Handle analysis phase
+        if both_conf is not None:
+            self.add_run_analysis_both(
+                parent_node=parent_node,
+                **both_conf,
+            )
+        else:
+            self.phases[PhPhases.RUN_ANALYSIS](parent_node=parent_node, **kwds)
+
 
 class PhMetaDAG(DAG):
-    def __init__(self, filename: PathLike, conf: Dict[str, Any], **kwds) -> None:
+    def __init__(self, filename: PathLike, conf: Dict[str, Any], samples: str = "features", from_phase: int = PhPhases.PREPARE_GENERATION, **kwds) -> None:
         super().__init__(filename, **kwds)
-        self._conf = self.preprocess_conf(conf)
+        self._conf = self.preprocess_conf(conf, samples)
+        self._from_phase = from_phase
         self.gvars_filename = None
         self.gvars = {}
 
     @staticmethod
-    def preprocess_conf(conf: Dict[str, Any]) -> Dict[str, Any]:
+    def preprocess_conf(conf: Dict[str, Any], samples: str = "features") -> Dict[str, Any]:
+        import copy
         conf["setup_file"] = str(Path(conf["setup_dir"]) / conf["setup_file"])
+        obs_base = Path(conf["observables"]).parent
+        h5_base = Path(conf["h5_dir"])
+        aug_outdir_base = Path(conf["augmentation"]["outdir"]).parent
+
+        if samples == "both":
+            # Store per-sample sub-configs; keep base h5_dir for PRE_run_setup
+            conf["_both"] = {
+                s: {
+                    "observables": str(obs_base / "observables.d" / f"{s}.yml"),
+                    "h5_dir": str(h5_base / s),
+                    "augmentation": {**copy.deepcopy(conf["augmentation"]), "outdir": str(aug_outdir_base / s)},
+                }
+                for s in ("features", "particles")
+            }
+        else:
+            conf["observables"] = str(obs_base / "observables.d" / f"{samples}.yml")
+            conf["h5_dir"] = str(h5_base / samples)
+            conf["augmentation"]["outdir"] = str(aug_outdir_base / samples)
         return conf
 
     @staticmethod
@@ -153,27 +219,46 @@ class PhMetaDAG(DAG):
         self.compile()
         self.write()
 
+    def _make_augment_node(self, name: str, h5_dir: str, aug_conf: Dict, log_dir: str) -> Node:
+        node = Node(name=name, script="submit/run_augmentation.sub")
+        experiment_dir = Path(h5_dir).parent.parent
+        samples_name = Path(h5_dir).name
+        vars = dict(aug_conf)
+        vars.update({
+            "events_file": experiment_dir / samples_name / (experiment_dir.name + ".h5"),
+            "log_dir": log_dir,
+        })
+        node.add_vars(vars)
+        node.add_pre(script="scripts/PRE_run_augmentation", args=[h5_dir, log_dir])
+        return node
+
     def add_ph_subdags(self) -> None:
+        is_both = "_both" in self._conf
+
         # 1. Add setup step
         setup_node = Node(name="RUN_SETUP", script="submit/run_setup.sub")
         setup_vars = ["setup_file", "setup_conf", "log_dir"]
         setup_node.add_vars({k: v for k, v in self._conf.items() if k in setup_vars})
-        pre_setup_vars = [
-            "setup_dir",
-            "tmp_dir",
-            "h5_dir",
-            "processes_dir",
-            "log_dir",
-        ]
+        # For 'both', PRE_run_setup gets the base h5_dir so it clears the parent,
+        # wiping both h5/features and h5/particles on re-runs
+        pre_setup_vars = ["setup_dir", "tmp_dir", "h5_dir", "processes_dir", "log_dir"]
         setup_node.add_pre(
             script="scripts/PRE_run_setup",
             args=[self._conf[v] for v in pre_setup_vars],
         )
         self.add_node(setup_node)
 
-        # 2. Add subdags from config file
+        # 2. Add per-process subdags
         c = 1
         ph_subdags_names = []
+        both_conf = None
+        if is_both:
+            both_conf = {
+                "observables_features": self._conf["_both"]["features"]["observables"],
+                "h5_dir_features": self._conf["_both"]["features"]["h5_dir"],
+                "observables_particles": self._conf["_both"]["particles"]["observables"],
+                "h5_dir_particles": self._conf["_both"]["particles"]["h5_dir"],
+            }
         for process in self._conf["processes"]:
             proc_dir = self.get_proc_dir(
                 base_dir=self._conf["processes_dir"],
@@ -186,36 +271,33 @@ class PhMetaDAG(DAG):
                 if self.gvars_filename is not None:
                     ph_subdag.add(f"INCLUDE {self.gvars_filename}")
                 ph_subdag.add_global_vars({"log_dir": ph_subdag.dirname})
-
-                # Start from first phase (prepare generation)
-                ph_subdag.add_from_phase(PhPhases.PREPARE_GENERATION, **process)
-
+                ph_subdag.add_from_phase(self._from_phase, both_conf=both_conf, **process)
                 self.add_subdag(ph_subdag, is_splice=True, from_parent=setup_node)
                 ph_subdags_names.append(ph_subdag.name)
                 c += 1
 
-        # 4. Run data augmentation
-        h5_dir = self.gvars["h5_dir"]
-        augment_node = Node(
-            name="RUN_AUGMENTATION", script="submit/run_augmentation.sub"
-        )
-        augment_vars = self._conf["augmentation"]
-        augment_vars.update(
-            {
-                "events_file": Path(h5_dir).parent / (Path(h5_dir).parent.name + ".h5"),
-                "log_dir": self.gvars["log_dir"],
-            }
-        )
-        augment_node.add_vars(augment_vars)
-        augment_node.add_pre(
-            script="scripts/PRE_run_augmentation", args=[h5_dir, self.gvars["log_dir"]]
-        )
-        self.add_node(augment_node)
+        # 3. Run augmentation (one node per sample type)
+        log_dir = self.gvars["log_dir"]
+        parents_str = " ".join(ph_subdags_names)
 
-        # TODO: This is ugly af but as of now subdags are not nodes and
-        # therefore cannot have children. A quick fix would be to create
-        # 'fake' parent nodes with `Node(name=ph_subdag.name, script="")` and
-        # allow for multiple parents in `from_parent` constructor of Node,
-        # then `augment_node = Node(..., from_parents=[phsb.name for phsb in ph_subdags])`
-        # Note that this 'fake' nodes already exist, since act as childs of `setup_node`
-        self.add(f"PARENT {' '.join(ph_subdags_names)} CHILD {augment_node.name}")
+        if is_both:
+            for s in ("features", "particles"):
+                node = self._make_augment_node(
+                    name=f"RUN_AUGMENTATION_{s.upper()}",
+                    h5_dir=self._conf["_both"][s]["h5_dir"],
+                    aug_conf=self._conf["_both"][s]["augmentation"],
+                    log_dir=log_dir,
+                )
+                self.add_node(node)
+                self.add(f"PARENT {parents_str} CHILD {node.name}")
+        else:
+            h5_dir = self.gvars["h5_dir"]
+            node = self._make_augment_node(
+                name="RUN_AUGMENTATION",
+                h5_dir=h5_dir,
+                aug_conf=self._conf["augmentation"],
+                log_dir=log_dir,
+            )
+            self.add_node(node)
+            # TODO: subdags cannot have children directly; this workaround uses their names
+            self.add(f"PARENT {parents_str} CHILD {node.name}")

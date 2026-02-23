@@ -7,6 +7,12 @@ import yaml
 
 from madminer_dag.schemas import PhPhases
 
+_CREATE_STR2PHASE = {
+    "generation": PhPhases.PREPARE_GENERATION,
+    "delphes": PhPhases.RUN_DELPHES,
+    "analysis": PhPhases.RUN_ANALYSIS,
+}
+
 
 @dataclass
 class ConfigDir:
@@ -27,6 +33,8 @@ class CreateArgs:
     name: Path
     dag_conf: Path
     gvars: Path
+    samples: str
+    from_phase: PhPhases
 
 
 @dataclass
@@ -68,11 +76,15 @@ def parse_create(arguments: argparse.Namespace) -> CreateArgs:
 
     config = ensure_config_dir(config_dir)
 
+    # Embed samples type in dag dir so different sample runs don't clobber each other
+    dag_stem = f"{config_dir.stem}_{arguments.samples}"
     return CreateArgs(
         conf=config.conf_yml,
-        name=Path("dag", config_dir.stem, config_dir.stem + ".dag"),
+        name=Path("dag", dag_stem, dag_stem + ".dag"),
         dag_conf=config.dag_conf,
         gvars=arguments.vars,
+        samples=arguments.samples,
+        from_phase=_CREATE_STR2PHASE[arguments.from_phase],
     )
 
 

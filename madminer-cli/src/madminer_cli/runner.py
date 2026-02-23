@@ -113,7 +113,7 @@ class Runner:
             configuration_file=arguments.mg_config_file,
             sample_benchmarks=arguments.benchmarks,
             is_background=arguments.is_background,
-            only_prepare_script=True,
+            only_prepare_script=False if arguments.now else True,
             log_directory=str(
                 arguments.log_file.parent / Path(arguments.proc_dir).name
             ),
@@ -209,58 +209,68 @@ class Runner:
         delphes_reader.analyse_delphes_samples()
         delphes_reader.save(arguments.outfile)
 
-    def run_augmentation(self, arguments: AugmentationArgs) -> None:
+    def run_augmentation(self, arguments: AugmentationArgs, strategy: str = "ratio") -> None:
 
         # TODO: Add support for other sampling strategies
-        # TODO: These should be args
-        validation_split = 0.0  # I do split myself
-        test_split = 0.2
+        validation_split = arguments.validation_split
+        test_split = arguments.test_split
+        theta_0 = arguments.theta0
+        theta_1 = arguments.theta1
+        theta_test = arguments.theta_test
+        n_samples = arguments.n_samples
+        n_test_samples = arguments.n_samples_test
+        outdir = arguments.outdir
+        processes = arguments.nproc
+
 
         sampler = self.sample_augmenter(filename=arguments.events_file)
 
-        # _ = sampler.sample_train_ratio(
-        #     theta0=arguments.theta0,
-        #     theta1=arguments.theta1,
-        #     n_samples=arguments.n_samples,
-        #     folder=arguments.outdir,
-        #     filename="train_ratio",
-        #     sample_only_from_closest_benchmark=True,
-        #     return_individual_n_effective=True,
-        #     n_processes=arguments.nproc,  # type: ignore
-        #     validation_split=validation_split,
-        #     test_split=test_split,
-        # )
 
-        # # TODO: Add theta score argument, for now using denominator
-        # # of sampling ratios (sm)
-        # _ = sampler.sample_train_local(
-        #     theta=arguments.theta1,
-        #     n_samples=arguments.n_samples,
-        #     folder=arguments.outdir,
-        #     filename="train_score",
-        #     sample_only_from_closest_benchmark=True,
-        #     validation_split=validation_split,
-        #     test_split=test_split,
-        # )
+        # Generate Training and Testing Ratios for the two thetas of interest (theta_1 and theta_test)
+        _ = sampler.sample_train_ratio(
+            theta0=theta_0,
+            theta1=theta_1,
+            n_samples=n_samples,
+            folder=outdir,
+            filename="train_ratio",
+            sample_only_from_closest_benchmark=True,
+            return_individual_n_effective=True,
+            n_processes=processes,
+            validation_split=validation_split,
+            test_split=test_split,
+        )
 
         _ = sampler.sample_train_ratio(
-            theta0=arguments.theta0,
-            theta1=arguments.theta_test,
-            n_samples=arguments.n_samples_test,
-            folder=arguments.outdir,
+            theta0=theta_0,
+            theta1=theta_test,
+            n_samples=n_test_samples,
+            folder=outdir,
             filename="test_ratio",
             sample_only_from_closest_benchmark=True,
             return_individual_n_effective=True,
-            n_processes=arguments.nproc,  # type: ignore
+            n_processes=processes,
             validation_split=validation_split,
             test_split=test_split,
             partition="test",
         )
 
+        # Generate Training and Testing Scores for the two thetas of interest (theta_1 and theta_test)
+        # TODO: Add theta score argument, for now using denominator
+        # of sampling ratios (sm)
         _ = sampler.sample_train_local(
-            theta=arguments.theta_test,
-            n_samples=arguments.n_samples_test,
-            folder=arguments.outdir,
+            theta=theta_1,
+            n_samples=n_samples,
+            folder=outdir,
+            filename="train_score",
+            sample_only_from_closest_benchmark=True,
+            validation_split=validation_split,
+            test_split=test_split,
+        )
+
+        _ = sampler.sample_train_local(
+            theta=theta_test,
+            n_samples=n_test_samples,
+            folder=outdir,
             filename="test_score",
             sample_only_from_closest_benchmark=True,
             validation_split=validation_split,

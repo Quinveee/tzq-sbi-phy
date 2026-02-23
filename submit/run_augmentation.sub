@@ -1,5 +1,5 @@
 executable              = scripts/run_augmentation
-arguments               = $(EVENTS_FILE) $(OUTDIR) $(THETA0) $(THETA1) $(THETA_TEST) $(N_SAMPLES) $(N_SAMPLES_TEST) $(NPROC) $(LOG_DIR)
+arguments               = $(EVENTS_FILE) $(OUTDIR) $(THETA0) $(THETA1) $(THETA_TEST) $(N_SAMPLES) $(N_SAMPLES_TEST) $(NPROC) $(VALIDATION_SPLIT) $(TEST_SPLIT) $(LOG_DIR)
 
 request_cpus            = $(NPROC)
 request_disk            = 4GB

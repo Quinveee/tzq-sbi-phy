@@ -10,13 +10,24 @@ THETA_TEST="$5"
 N_SAMPLES="$6"
 N_SAMPLES_TEST="$7"
 N_PROC="$8"
-LOG_DIR="$9"/augmentation.log
+
+# Handle both old format (9 args, no validation/test split) and new format (11 args)
+if [[ $# -eq 9 ]]; then
+    VALIDATION_SPLIT="0.0"
+    TEST_SPLIT="0.2"
+    LOG_DIR="$9"
+else
+    VALIDATION_SPLIT="$9"
+    TEST_SPLIT="${10}"
+    LOG_DIR="${11}"
+fi
+LOG_DIR="$LOG_DIR"/augmentation.log
 
 mkdir -p $OUTDIR
 
 cp -v $EVENTS_FILE $TMP/events.h5
 
-madminer -VVV --log-file "$LOG_DIR" run_augmentation $TMP/events.h5 $TMP --theta0 $THETA0 --theta1 $THETA1 --theta-test $THETA_TEST --n-samples "$N_SAMPLES" --n-samples-test "$N_SAMPLES_TEST" --nproc "$N_PROC" 
+madminer -VVV --log-file "$LOG_DIR" run_augmentation $TMP/events.h5 $TMP --theta0 $THETA0 --theta1 $THETA1 --theta-test $THETA_TEST --n-samples "$N_SAMPLES" --n-samples-test "$N_SAMPLES_TEST" --nproc "$N_PROC" --validation-split "$VALIDATION_SPLIT" --test-split "$TEST_SPLIT"
 
 rm -vrf $TMP/events.h5
 

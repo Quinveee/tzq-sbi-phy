@@ -6,7 +6,7 @@ from madminer_dag.ph_dag import PhMetaDAG
 
 
 def create(args: CreateArgs):
-    PhMetaDAG(filename=args.name, conf=args.conf).run(
+    PhMetaDAG(filename=args.name, conf=args.conf, samples=args.samples, from_phase=args.from_phase).run(
         gvars_filename=str(args.gvars), dag_conf=args.dag_conf
     )
 

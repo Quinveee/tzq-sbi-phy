@@ -9,6 +9,15 @@ from madminer_dag.parse_utils import Args, parse_create, parse_redo
 def parse_args(args: List[str]) -> Args:
     parser = argparse.ArgumentParser(prog="madminer_dag")
 
+    parser.add_argument(
+        "-s",
+        "--samples",
+        default="features",
+        type=str,
+        choices=["features", "particles", "both"],
+        help="Generate feature-level data, particle-level data, or both simultaneously",
+    )
+
     subparsers = parser.add_subparsers(title="commands")
 
     create = subparsers.add_parser("create")
@@ -26,6 +35,15 @@ def parse_args(args: List[str]) -> Args:
         default="global.vars.dag",
         type=Path,
         help="Name of the file to store global macros",
+    )
+    create.add_argument(
+        "-p",
+        "--from-phase",
+        dest="from_phase",
+        type=str,
+        default="generation",
+        choices=("generation", "delphes", "analysis"),
+        help="Start dag from this phase, skipping all earlier phases",
     )
 
     create.set_defaults(func=parse_create)

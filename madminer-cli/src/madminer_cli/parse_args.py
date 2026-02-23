@@ -253,6 +253,20 @@ def parse_args(args: List[str]) -> Args:
         default=1,
         help="Number of cores for parallel sampling. -1 for all available",
     )
+    parser_augmentation.add_argument(
+        "--validation-split",
+        type=float,
+        default=0.0,
+        dest="validation_split",
+        help="Fraction of training samples to use for validation",
+    )
+    parser_augmentation.add_argument(
+        "--test-split",
+        type=float,
+        default=0.2,
+        dest="test_split",
+        help="Fraction of events to reserve for the test partition",
+    )
     parser_augmentation.set_defaults(arg_handler=parse_augmentation)
 
     # parse args
