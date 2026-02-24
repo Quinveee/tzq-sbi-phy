@@ -13,6 +13,7 @@ LOG_DIR="$7"/analysis.log
 FILENAME="$TEMPDIR"/procdir."$NGEN".tmp
 PROC_DIR=$(cat $FILENAME | awk '{print $1}')
 BENCHMARK=$(cat $FILENAME | awk '{print $2}')
+IS_BACKGROUND=$(cat $FILENAME | awk '{print $3}')
 
 BASENAME=$(basename $PROC_DIR)
 ROOT_FILE_DIR="$ROOT_FILES_DIR"/"$BASENAME"
@@ -21,6 +22,11 @@ OUTFILE="$H5_DIR"/"$BASENAME".h5
 
 OUTFILE_TMP=$TMP/out.h5
 
-madminer --log-file "$LOG_DIR" run_analysis $OBSERVABLES $SETUP_FILE $PROC_DIR $OUTFILE_TMP --benchmark $BENCHMARK --root-files-dir $ROOT_FILE_DIR
+BGFLAG=""
+if [ "$IS_BACKGROUND" = "true" ]; then
+  BGFLAG="--is_background"
+fi
+
+madminer --log-file "$LOG_DIR" run_analysis $OBSERVABLES $SETUP_FILE $PROC_DIR $OUTFILE_TMP --benchmark $BENCHMARK --root-files-dir $ROOT_FILE_DIR $BGFLAG
 
 cp -fv $OUTFILE_TMP $OUTFILE

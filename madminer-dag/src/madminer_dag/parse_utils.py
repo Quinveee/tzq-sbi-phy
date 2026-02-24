@@ -11,6 +11,7 @@ _CREATE_STR2PHASE = {
     "generation": PhPhases.PREPARE_GENERATION,
     "delphes": PhPhases.RUN_DELPHES,
     "analysis": PhPhases.RUN_ANALYSIS,
+    "augmentation": PhPhases.RUN_AUGMENTATION,
 }
 
 

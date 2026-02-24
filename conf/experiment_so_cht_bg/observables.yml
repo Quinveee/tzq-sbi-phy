@@ -1,0 +1,226 @@
+observables:
+  # pt of the *required* jets
+  - name: "pt_j1"
+    val_expression: "j[0].pt"
+    is_required: true
+
+  - name: "pt_j2"
+    val_expression: "j[1].pt"
+    is_required: true
+
+  # pt of the *non required* jets
+  - name: "pt_j3"
+    val_expression: "j[2].pt"
+    is_required: false
+    val_default: -10.0
+
+  - name: "pt_j4"
+    val_expression: "j[3].pt"
+    is_required: false
+    val_default: -10.0
+
+  - name: "pt_j5"
+    val_expression: "j[4].pt"
+    is_required: false
+    val_default: -10.0
+
+  - name: "pt_j6"
+    val_expression: "j[5].pt"
+    is_required: false
+    val_default: -10.0
+
+  - name: "pt_j7"
+    val_expression: "j[6].pt"
+    is_required: false
+    val_default: -10.0
+
+  - name: "pt_j8"
+    val_expression: "j[7].pt"
+    is_required: false
+    val_default: -10.0
+
+  # |η| of the *required* jets
+  - name: "eta_j1"
+    val_expression: "j[0].eta"
+    is_required: true
+
+  - name: "eta_j2"
+    val_expression: "j[1].eta"
+    is_required: true
+
+  # |η| of the *non required* jets
+  - name: "eta_j3"
+    val_expression: "j[2].eta"
+    is_required: false
+    val_default: -10.0
+
+  - name: "eta_j4"
+    val_expression: "j[3].eta"
+    is_required: false
+    val_default: -10.0
+
+  - name: "eta_j5"
+    val_expression: "j[4].eta"
+    is_required: false
+    val_default: -10.0
+
+  - name: "eta_j6"
+    val_expression: "j[5].eta"
+    is_required: false
+    val_default: -10.0
+
+  - name: "eta_j7"
+    val_expression: "j[6].eta"
+    is_required: false
+    val_default: -10.0
+
+  - name: "eta_j8"
+    val_expression: "j[7].eta"
+    is_required: false
+    val_default: -10.0
+
+  # phi of the *required* jets
+  - name: "phi_j1"
+    val_expression: "j[0].phi"
+    is_required: true
+
+  - name: "phi_j2"
+    val_expression: "j[1].phi"
+    is_required: true
+
+  # phi of the *non required* jets
+  - name: "phi_j3"
+    val_expression: "j[2].phi"
+    is_required: false
+    val_default: -10.0
+
+  - name: "phi_j4"
+    val_expression: "j[3].phi"
+    is_required: false
+    val_default: -10.0
+
+  - name: "phi_j5"
+    val_expression: "j[4].phi"
+    is_required: false
+    val_default: -10.0
+
+  - name: "phi_j6"
+    val_expression: "j[5].phi"
+    is_required: false
+    val_default: -10.0
+
+  - name: "phi_j7"
+    val_expression: "j[6].phi"
+    is_required: false
+    val_default: -10.0
+
+  - name: "phi_j8"
+    val_expression: "j[7].phi"
+    is_required: false
+    val_default: -10.0
+
+  # pt of the leptons
+  - name: "pt_l1"
+    val_expression: "l[0].pt"
+    is_required: true
+
+  - name: "pt_l2"
+    val_expression: "l[1].pt"
+    is_required: true
+
+  - name: "pt_l3"
+    val_expression: "l[2].pt"
+    is_required: true
+
+  # |η| of the leptons
+  - name: "eta_l1"
+    val_expression: "l[0].eta"
+    is_required: true
+
+  - name: "eta_l2"
+    val_expression: "l[1].eta"
+    is_required: true
+
+  - name: "eta_l3"
+    val_expression: "l[2].eta"
+    is_required: true
+
+  # phi of the leptons
+  - name: "phi_l1"
+    val_expression: "l[0].phi"
+    is_required: true
+
+  - name: "phi_l2"
+    val_expression: "l[1].phi"
+    is_required: true
+
+  - name: "phi_l3"
+    val_expression: "l[2].phi"
+    is_required: true
+
+  # Additional observables
+
+
+cuts: 
+  # -- All pt subleading jets >= 25
+  # -- All pt subleading letptons >= 10 
+  # -- Exactly 3 leptons 
+  # -- More than 1 jet
+
+  # NOTE: Setting `is_required: true` KEEPS events
+  #       for which the expression CANNOT be evaluated
+  #       This is very confusing and instead of `is_required` 
+  #       it should be `pass_cut_on_error` or sth like that
+
+  # Cuts on the pt of the jets
+  - val_expression: "pt_j1 >= 35.0"
+    is_required: false
+
+  - val_expression: "pt_j2 >= 25.0"
+    is_required: false
+
+  # - val_expression: "pt_j3 >= 25.0"
+  #   is_required: true
+
+  # - val_expression: "pt_j4 >= 25.0"
+  #   is_required: true
+
+  # - val_expression: "pt_j5 >= 25.0"
+  #   is_required: true
+
+  # - val_expression: "pt_j6 >= 25.0"
+  #   is_required: true
+
+  # - val_expression: "pt_j7 >= 25.0"
+  #   is_required: true
+
+  # - val_expression: "pt_j8 >= 25.0"
+  #   is_required: true
+
+  # Cuts on the pt of the leptons
+  - val_expression: "pt_l1 >= 27.0"
+    is_required: false
+
+  - val_expression: "pt_l2 >= 10.0"
+    is_required: false
+
+  - val_expression: "pt_l3 >= 10.0"
+    is_required: false
+
+  # |η| < 2.5 for every lepton
+  - val_expression: "eta_l1 < 2.5"
+    is_required: false
+
+  - val_expression: "eta_l2 < 2.5"
+    is_required: false
+
+  - val_expression: "eta_l3 < 2.5"
+    is_required: false
+
+  # No more than 8 jets
+  - val_expression: "len(j) < 9"
+    is_required: false
+
+  # Exactly 3 leptons (equivalent to `len(l) < 4` given cuts above)
+  - val_expression: "len(l) == 3"
+    is_required: false

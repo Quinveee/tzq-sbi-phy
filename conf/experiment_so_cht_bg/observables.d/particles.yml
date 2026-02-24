@@ -1,0 +1,226 @@
+observables:
+
+  # Leptons (in order of pT)
+  - name: "l1_E"
+    val_expression: "l[0].E"
+    is_required: true
+
+  - name: "l1_px"
+    val_expression: "l[0].px"
+    is_required: true
+
+  - name: "l1_py"
+    val_expression: "l[0].py"
+    is_required: true
+
+  - name: "l1_pz"
+    val_expression: "l[0].pz"
+    is_required: true
+
+  - name: "l2_E"
+    val_expression: "l[1].E"
+    is_required: true
+
+  - name: "l2_px"
+    val_expression: "l[1].px"
+    is_required: true
+
+  - name: "l2_py"
+    val_expression: "l[1].py"
+    is_required: true
+
+  - name: "l2_pz"
+    val_expression: "l[1].pz"
+    is_required: true
+
+  - name: "l3_E"
+    val_expression: "l[2].E"
+    is_required: true
+
+  - name: "l3_px"
+    val_expression: "l[2].px"
+    is_required: true
+
+  - name: "l3_py"
+    val_expression: "l[2].py"
+    is_required: true
+
+  - name: "l3_pz"
+    val_expression: "l[2].pz"
+    is_required: true
+
+  # Jets (in order of pT)
+  - name: "j1_E"
+    val_expression: "j[0].E"
+    is_required: true
+
+  - name: "j1_px"
+    val_expression: "j[0].px"
+    is_required: true
+
+  - name: "j1_py"
+    val_expression: "j[0].py"
+    is_required: true
+
+  - name: "j1_pz"
+    val_expression: "j[0].pz"
+    is_required: true
+
+  - name: "j2_E"
+    val_expression: "j[1].E"
+    is_required: true
+
+  - name: "j2_px"
+    val_expression: "j[1].px"
+    is_required: true
+
+  - name: "j2_py"
+    val_expression: "j[1].py"
+    is_required: true
+
+  - name: "j2_pz"
+    val_expression: "j[1].pz"
+    is_required: true
+
+  - name: "j3_E"
+    val_expression: "j[2].E"
+    is_required: false
+
+  - name: "j3_px"
+    val_expression: "j[2].px"
+    is_required: false
+
+  - name: "j3_py"
+    val_expression: "j[2].py"
+    is_required: false
+
+  - name: "j3_pz"
+    val_expression: "j[2].pz"
+    is_required: false
+
+  - name: "j4_E"
+    val_expression: "j[3].E"
+    is_required: false
+
+  - name: "j4_px"
+    val_expression: "j[3].px"
+    is_required: false
+
+  - name: "j4_py"
+    val_expression: "j[3].py"
+    is_required: false
+
+  - name: "j4_pz"
+    val_expression: "j[3].pz"
+    is_required: false
+
+  - name: "j5_E"
+    val_expression: "j[4].E"
+    is_required: false
+
+  - name: "j5_px"
+    val_expression: "j[4].px"
+    is_required: false
+
+  - name: "j5_py"
+    val_expression: "j[4].py"
+    is_required: false
+
+  - name: "j5_pz"
+    val_expression: "j[4].pz"
+    is_required: false
+
+  - name: "j6_E"
+    val_expression: "j[5].E"
+    is_required: false
+
+  - name: "j6_px"
+    val_expression: "j[5].px"
+    is_required: false
+
+  - name: "j6_py"
+    val_expression: "j[5].py"
+    is_required: false
+
+  - name: "j6_pz"
+    val_expression: "j[5].pz"
+    is_required: false
+
+  - name: "j7_E"
+    val_expression: "j[6].E"
+    is_required: false
+
+  - name: "j7_px"
+    val_expression: "j[6].px"
+    is_required: false
+
+  - name: "j7_py"
+    val_expression: "j[6].py"
+    is_required: false
+
+  - name: "j7_pz"
+    val_expression: "j[6].pz"
+    is_required: false
+
+  - name: "j8_E"
+    val_expression: "j[7].E"
+    is_required: false
+
+  - name: "j8_px"
+    val_expression: "j[7].px"
+    is_required: false
+
+  - name: "j8_py"
+    val_expression: "j[7].py"
+    is_required: false
+
+  - name: "j8_pz"
+    val_expression: "j[7].pz"
+    is_required: false
+
+
+cuts: 
+  # -- All pt subleading jets >= 25
+  # -- All pt subleading letptons >= 10 
+  # -- Exactly 3 leptons 
+  # -- More than 1 jet
+
+  # NOTE: Setting `is_required: true` KEEPS events
+  #       for which the expression CANNOT be evaluated
+  #       This is very confusing and instead of `is_required` 
+  #       it should be `pass_cut_on_error` or sth like that
+
+  # Cuts on the pt of the jets
+  - val_expression: "j[0].pt >= 35.0"
+    is_required: false
+
+  - val_expression: "j[1].pt >= 25.0"
+    is_required: false
+
+  # Cuts on the pt of the leptons
+  - val_expression: "l[0].pt >= 27.0"
+    is_required: false
+
+  - val_expression: "l[1].pt >= 10.0"
+    is_required: false
+
+  - val_expression: "l[2].pt >= 10.0"
+    is_required: false
+
+  # |η| < 2.5 for every lepton
+  - val_expression: "l[0].eta < 2.5"
+    is_required: false
+
+  - val_expression: "l[1].eta < 2.5"
+    is_required: false
+
+  - val_expression: "l[2].eta < 2.5"
+    is_required: false
+
+  # No more than 8 jets
+  - val_expression: "len(j) < 9"
+    is_required: false
+
+  # Exactly 3 leptons (equivalent to `len(l) < 4` given cuts above)
+  - val_expression: "len(l) == 3"
+    is_required: false

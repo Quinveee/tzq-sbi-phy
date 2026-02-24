@@ -278,15 +278,15 @@ class Runner:
             partition="test",
         )
 
-        # _ = sampler.sample_test(
-        #     theta=arguments.theta_test,
-        #     n_samples=arguments.n_samples_test,
-        #     folder=arguments.outdir,
-        #     filename="test",
-        #     n_processes=arguments.nproc,  # type: ignore
-        #     validation_split=validation_split,
-        #     test_split=test_split,
-        # )
+        _ = sampler.sample_test(
+            theta=arguments.theta_test,
+            n_samples=arguments.n_samples_test,
+            folder=arguments.outdir,
+            filename="test",
+            n_processes=arguments.nproc,
+            validation_split=validation_split,
+            test_split=test_split,
+        )
 
     def run(self) -> None:
 

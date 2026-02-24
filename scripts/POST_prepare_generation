@@ -11,5 +11,11 @@ BENCHMARK="$5"
 RWG_CARD="$6"
 TMPDIR="$7"
 LOGS_DIR="$8"/POST_prepare_generation.log
+IS_BACKGROUND="${9:-false}"
 
-./scripts/_py/POST_prepare_generation.py "$NGEN" "$JOBID" "$PROC_DIR" "$N_SUBPROCESSES" "$BENCHMARK" --rwg-card "$RWG_CARD" --tmp-dir "$TMPDIR" > "$LOGS_DIR" 2>&1
+BGFLAG=""
+if [ "$IS_BACKGROUND" = "true" ]; then
+  BGFLAG="--is-background"
+fi
+
+./scripts/_py/POST_prepare_generation.py "$NGEN" "$JOBID" "$PROC_DIR" "$N_SUBPROCESSES" "$BENCHMARK" --rwg-card "$RWG_CARD" --tmp-dir "$TMPDIR" $BGFLAG > "$LOGS_DIR" 2>&1

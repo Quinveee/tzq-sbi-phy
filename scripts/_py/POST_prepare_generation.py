@@ -31,6 +31,7 @@ class Args:
     rwg_card: str
     tmp_dir: str
     benchmark: str
+    is_background: bool = False
 
 
 def parse_args(args: List[str]) -> Args:
@@ -47,6 +48,12 @@ def parse_args(args: List[str]) -> Args:
         "n_subprocesses", type=int, help="Number of subprocesses to consider"
     )
     parser.add_argument("benchmark", type=str, help="Morphing benchmark identifier")
+    parser.add_argument(
+        "--is-background",
+        action="store_true",
+        dest="is_background",
+        help="Mark this process as a background process (no morphing)",
+    )
     parser.add_argument(
         "--rwg-card",
         type=str,
@@ -80,6 +87,7 @@ def parse_args(args: List[str]) -> Args:
         rwg_card=arguments.rwg_card,
         tmp_dir=arguments.tmp_dir,
         benchmark=arguments.benchmark,
+        is_background=arguments.is_background,
     )
 
 
@@ -139,16 +147,16 @@ def fill_rnd_seed_runcards(
 
 
 def write_procdir_to_file(
-    n_gen: int, proc_dir: str, benchmark: str, tmp_dir: str
+    n_gen: int, proc_dir: str, benchmark: str, tmp_dir: str, is_background: bool = False
 ) -> None:
     fn = Path(tmp_dir) / f"procdir.{n_gen}.tmp"
     print(f"Filename to write process directory to: {fn}")
 
     with open(fn, "w") as f:
-        f.write(f"{proc_dir} {benchmark}")
+        f.write(f"{proc_dir} {benchmark} {str(is_background).lower()}")
 
     print(
-        f"Process directory {proc_dir} and benchmark {benchmark} writen to file: {fn}"
+        f"Process directory {proc_dir}, benchmark {benchmark}, is_background {is_background} written to file: {fn}"
     )
 
 
@@ -172,6 +180,7 @@ def main(arguments: Args) -> None:
         proc_dir=arguments.proc_dir,
         benchmark=arguments.benchmark,
         tmp_dir=arguments.tmp_dir,
+        is_background=arguments.is_background,
     )
 
 

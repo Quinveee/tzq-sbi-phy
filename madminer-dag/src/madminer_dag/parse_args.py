@@ -36,13 +36,14 @@ def parse_args(args: List[str]) -> Args:
         type=Path,
         help="Name of the file to store global macros",
     )
+
     create.add_argument(
         "-p",
         "--from-phase",
         dest="from_phase",
         type=str,
         default="generation",
-        choices=("generation", "delphes", "analysis"),
+        choices=("generation", "delphes", "analysis", "augmentation"),
         help="Start dag from this phase, skipping all earlier phases",
     )
 

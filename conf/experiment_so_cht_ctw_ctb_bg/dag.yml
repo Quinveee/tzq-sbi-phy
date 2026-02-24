@@ -1,0 +1,543 @@
+# normally, but for testing, we set runs=1 and n_subprocesses=1 for all processes:
+# runs: 6
+# n_subprocesses: 6
+
+tmp_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/share"
+log_dir: "logs/experiment_so_cht_ctw_ctb"
+
+# 1. Setup
+setup_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/setup"
+setup_file: "setup.h5"
+setup_conf: "conf/experiment_so_cht_ctw_ctb/benchmarks.yml"
+
+# 2. Event generation
+processes_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/processes"
+mg_dir: "/project/atlas/users/qvanenge/MG5_aMC_v3_5_1"
+
+processes:
+  # tzq (t-channel single top with Z)
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_sm_tdecay.dat"
+    run_card: "run_card_signal_large.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_1"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_2"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_3"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_4"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_5"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_6"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_7"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_8"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_9"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  # tbarzq (t-bar single top with Z)
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_sm_tdecay.dat"
+    run_card: "run_card_signal_large.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_1"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_2"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_3"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_4"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_5"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_6"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_7"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_8"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarzq"
+    proc_card: "proc_card_mg5_smeft_tdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_9"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarzq/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  # ttz (ttbar with Z)
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_sm_ttZ_wdecay.dat"
+    run_card: "run_card_signal_large.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_1"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_2"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_3"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_4"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_5"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_6"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_7"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_8"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/ttz"
+    proc_card: "proc_card_mg5_smeft_ttZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_9"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/ttz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  # twz (t-channel single top with W-Z)
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_sm_tWZ_wdecay.dat"
+    run_card: "run_card_signal_large.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_1"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_2"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_3"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_4"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_5"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_6"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_7"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_8"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/twz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_9"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/twz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  # tbarwz (t-bar single top with W-Z)
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_sm_tWZ_wdecay.dat"
+    run_card: "run_card_signal_large.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_1"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_2"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_3"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_4"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_5"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_6"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_7"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_8"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/tbarwz"
+    proc_card: "proc_card_mg5_smeft_tWZ_wdecay.dat"
+    run_card: "run_card_signal_small.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "morphing_basis_vector_9"
+    reweight_card_insert: "cards/experiment_so_cht_ctw_ctb/tbarwz/reweight_card_insert_tdecay.dat"
+    runs: 6
+    n_subprocesses: 6
+
+# Delphes 
+delphes_card: "cards/experiment_so_cht/delphes_card_ATLAS.dat"
+delphes_dir: "/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/Delphes"
+ld_library_path: "/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/HEPTools/lhapdf6_py3/lib:/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/Delphes/:/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/golem95/lib/:/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/HEPTools/pythia8/lib"
+root_files_dir: "/data/atlas/users/qvanenge/experiment_so_cht/root_files"
+
+# Analysis
+observables: "conf/experiment_so_cht_ctw_ctb/observables.yml"
+h5_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/h5"
+
+# Augmentation
+augmentation: 
+  outdir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/samples"
+  theta0: "sampling.random_morphing_points(1000,[('gaussian',0.0,0.5),('gaussian',0.0,0.5),('gaussian',0.0,0.5)])"
+  theta1: "sampling.benchmark('sm')"
+  theta_test: "sampling.benchmark('sm')"
+  n_samples: 500000
+  n_samples_test: 10000
+  nproc: 1 # Multicore does not work
+  validation_split: 0.1
+  test_split: 0.2

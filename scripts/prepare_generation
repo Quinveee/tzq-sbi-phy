@@ -12,9 +12,15 @@ PYTHIA_CARD="$7"
 BENCHMARK="$8"
 MGDIR="$9"
 LOG_FILE="${10}"/gen.log
+IS_BACKGROUND="${11:-false}"
 
 mkdir -p $PROC_DIR
 
-madminer --log-file "$LOG_FILE" run_generation "$SETUP_FILE" "$CARDS_DIR" "$TMP"/mgprocess --proc-card "$PROC_CARD" --run-card "$RUN_CARD" --param-card "$PARAM_CARD" --pythia-card "$PYTHIA_CARD" --benchmark "$BENCHMARK" --mg-dir "$MGDIR"
+BGFLAG=""
+if [ "$IS_BACKGROUND" = "true" ] || [ "$IS_BACKGROUND" = "True" ]; then
+  BGFLAG="--is_background"
+fi
+
+madminer --log-file "$LOG_FILE" run_generation "$SETUP_FILE" "$CARDS_DIR" "$TMP"/mgprocess --proc-card "$PROC_CARD" --run-card "$RUN_CARD" --param-card "$PARAM_CARD" --pythia-card "$PYTHIA_CARD" --benchmark "$BENCHMARK" --mg-dir "$MGDIR" $BGFLAG
 
 cp -rfv $TMP/mgprocess/* $PROC_DIR

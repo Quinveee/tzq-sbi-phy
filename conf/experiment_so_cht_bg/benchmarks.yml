@@ -1,0 +1,17 @@
+parameters:
+  - lha_block: "smeft"
+    lha_id: 31
+    parameter_name: "cHt"
+    morphing_max_power: 2
+    parameter_range: [-1.0, 1.0]
+    param_card_transform: "10.0*theta"
+
+benchmarks:
+  - benchmark_name: "sm"
+    parameter_values: 
+      cHt: 0.0
+
+morphing:
+  max_overall_power: 2
+  include_existing_benchmarks: true
+

@@ -37,8 +37,13 @@ class PhDAG(DAG):
             "pythia_card",
             "benchmark",
             "proc_dir",
+            "is_background",
         ]
-        node.add_vars({k: v for k, v in kwds.items() if k in job_vars})
+        vars_to_add = {k: v for k, v in kwds.items() if k in job_vars}
+        # Default is_background to false if not specified; normalize to lowercase string
+        is_bg = vars_to_add.get("is_background", False)
+        vars_to_add["is_background"] = "true" if is_bg else "false"
+        node.add_vars(vars_to_add)
         node.add_post(
             script="scripts/POST_prepare_generation",
             args=[
@@ -50,6 +55,7 @@ class PhDAG(DAG):
                 kwds["reweight_card_insert"],
                 kwds["tmp_dir"],
                 self.filename.parent,
+                str(kwds.get("is_background", False)).lower(),
             ],
         )
         self.add_node(node, from_parent=parent_node)
@@ -232,8 +238,40 @@ class PhMetaDAG(DAG):
         node.add_pre(script="scripts/PRE_run_augmentation", args=[h5_dir, log_dir])
         return node
 
+    def _add_augmentation_nodes(self, parents_str: Optional[str] = None) -> None:
+        """Add augmentation node(s), optionally chained after the given parents."""
+        is_both = "_both" in self._conf
+        log_dir = self.gvars.get("log_dir", self._conf.get("log_dir", ""))
+        if is_both:
+            for s in ("features", "particles"):
+                node = self._make_augment_node(
+                    name=f"RUN_AUGMENTATION_{s.upper()}",
+                    h5_dir=self._conf["_both"][s]["h5_dir"],
+                    aug_conf=self._conf["_both"][s]["augmentation"],
+                    log_dir=log_dir,
+                )
+                self.add_node(node)
+                if parents_str:
+                    self.add(f"PARENT {parents_str} CHILD {node.name}")
+        else:
+            h5_dir = self.gvars.get("h5_dir", self._conf.get("h5_dir", ""))
+            node = self._make_augment_node(
+                name="RUN_AUGMENTATION",
+                h5_dir=h5_dir,
+                aug_conf=self._conf["augmentation"],
+                log_dir=log_dir,
+            )
+            self.add_node(node)
+            if parents_str:
+                self.add(f"PARENT {parents_str} CHILD {node.name}")
+
     def add_ph_subdags(self) -> None:
         is_both = "_both" in self._conf
+
+        # If starting from augmentation, skip setup and all physics subdags
+        if self._from_phase >= PhPhases.RUN_AUGMENTATION:
+            self._add_augmentation_nodes(parents_str=None)
+            return
 
         # 1. Add setup step
         setup_node = Node(name="RUN_SETUP", script="submit/run_setup.sub")
@@ -277,27 +315,5 @@ class PhMetaDAG(DAG):
                 c += 1
 
         # 3. Run augmentation (one node per sample type)
-        log_dir = self.gvars["log_dir"]
         parents_str = " ".join(ph_subdags_names)
-
-        if is_both:
-            for s in ("features", "particles"):
-                node = self._make_augment_node(
-                    name=f"RUN_AUGMENTATION_{s.upper()}",
-                    h5_dir=self._conf["_both"][s]["h5_dir"],
-                    aug_conf=self._conf["_both"][s]["augmentation"],
-                    log_dir=log_dir,
-                )
-                self.add_node(node)
-                self.add(f"PARENT {parents_str} CHILD {node.name}")
-        else:
-            h5_dir = self.gvars["h5_dir"]
-            node = self._make_augment_node(
-                name="RUN_AUGMENTATION",
-                h5_dir=h5_dir,
-                aug_conf=self._conf["augmentation"],
-                log_dir=log_dir,
-            )
-            self.add_node(node)
-            # TODO: subdags cannot have children directly; this workaround uses their names
-            self.add(f"PARENT {parents_str} CHILD {node.name}")
+        self._add_augmentation_nodes(parents_str=parents_str)
