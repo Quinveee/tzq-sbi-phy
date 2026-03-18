@@ -22,7 +22,6 @@ mkdir -p $ROOT_FILE_DIR
 
 # TODO: Run diagram generation, mc sampling and delphes on the same node (this has to be done sequentially anyway)
 # Then transfer only .root files (and lhe files) to a process dir in /dcache
-# Use 'environment' in submit files instead of passing variables as script arguments...
 
 PROC_DIR_TMP=$TMP/mgprocess
 ROOT_DIR_TMP=$TMP/rootfiles

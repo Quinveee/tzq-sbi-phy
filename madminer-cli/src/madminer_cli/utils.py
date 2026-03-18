@@ -1,8 +1,6 @@
 from madminer_cli.schemas import DelphesSample
 
 
-# TODO: I don't really use the structure in which different benchmarks can go
-# to the same process folder. It is confusing and should never be the case
 def get_delphes_sample(args) -> DelphesSample:
 
     hepmc_filename = (

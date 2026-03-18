@@ -29,4 +29,5 @@ fi
 
 madminer --log-file "$LOG_DIR" run_analysis $OBSERVABLES $SETUP_FILE $PROC_DIR $OUTFILE_TMP --benchmark $BENCHMARK --root-files-dir $ROOT_FILE_DIR $BGFLAG
 
+mkdir -p $(dirname $OUTFILE)
 cp -fv $OUTFILE_TMP $OUTFILE

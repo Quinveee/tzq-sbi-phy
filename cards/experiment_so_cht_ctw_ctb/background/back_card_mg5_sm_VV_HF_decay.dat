@@ -1,0 +1,12 @@
+import model SMEFTsim_top_MwScheme_UFO-massless
+
+# with -massless b is not in proton, leading to an inability to generate, so;
+define p = g u c d s b u~ c~ d~ s~ b~
+
+# Bottom Quark
+generate p p > w+ z b b~ NP=0, (w+ > l+ vl NP=0), (z > l+ l- NP=0) @0 SMHLOOP=0 NPprop=0
+add process p p > w- z b b~ NP=0, (w- > l- vl~ NP=0), (z > l+ l- NP=0) @1 SMHLOOP=0 NPprop=0
+
+# Charm Quark
+add process p p > w+ z c c~ NP=0, (w+ > l+ vl NP=0), (z > l+ l- NP=0) @2 SMHLOOP=0 NPprop=0
+add process p p > w- z c c~ NP=0, (w- > l- vl~ NP=0), (z > l+ l- NP=0) @3 SMHLOOP=0 NPprop=0

@@ -1,0 +1,257 @@
+observables:
+
+# ------------------------------
+# Lepton kinematics
+# ------------------------------
+
+- name: "l1_pt"
+  val_expression: "l[0].pt"
+  is_required: true
+
+- name: "l2_pt"
+  val_expression: "l[1].pt"
+  is_required: true
+
+- name: "l3_pt"
+  val_expression: "l[2].pt"
+  is_required: true
+
+- name: "l1_eta"
+  val_expression: "l[0].eta"
+  is_required: true
+
+- name: "l2_eta"
+  val_expression: "l[1].eta"
+  is_required: true
+
+- name: "l3_eta"
+  val_expression: "l[2].eta"
+  is_required: true
+
+- name: "l1_phi"
+  val_expression: "l[0].phi"
+  is_required: true
+
+- name: "l2_phi"
+  val_expression: "l[1].phi"
+  is_required: true
+
+- name: "l3_phi"
+  val_expression: "l[2].phi"
+  is_required: true
+
+
+# ------------------------------
+# Jet kinematics
+# ------------------------------
+
+- name: "j1_pt"
+  val_expression: "j[0].pt"
+  is_required: true
+
+- name: "j2_pt"
+  val_expression: "j[1].pt"
+  is_required: true
+
+- name: "j1_eta"
+  val_expression: "j[0].eta"
+  is_required: true
+
+- name: "j2_eta"
+  val_expression: "j[1].eta"
+  is_required: true
+
+- name: "j1_phi"
+  val_expression: "j[0].phi"
+  is_required: true
+
+- name: "j2_phi"
+  val_expression: "j[1].phi"
+  is_required: true
+
+
+# ------------------------------
+# Missing energy
+# ------------------------------
+
+- name: "met_pt"
+  val_expression: "met.pt"
+  is_required: true
+
+- name: "met_phi"
+  val_expression: "met.phi"
+  is_required: true
+
+
+# ------------------------------
+# Jet topology (tZq sensitivity)
+# ------------------------------
+
+- name: "n_jets"
+  val_expression: "len(j)"
+  is_required: true
+
+- name: "max_jet_abs_eta"
+  val_expression: "max([abs(jet.eta) for jet in j])"
+  is_required: false
+
+- name: "delta_eta_j1j2"
+  val_expression: "abs(j[0].eta - j[1].eta)"
+  is_required: false
+
+
+# ------------------------------
+# Dilepton invariant masses
+# ------------------------------
+
+- name: "m_ll12"
+  val_expression: "(l[0] + l[1]).m"
+  is_required: true
+
+- name: "m_ll13"
+  val_expression: "(l[0] + l[2]).m"
+  is_required: true
+
+- name: "m_ll23"
+  val_expression: "(l[1] + l[2]).m"
+  is_required: true
+
+
+# ------------------------------
+# Z boson proxy observables
+# ------------------------------
+
+- name: "pt_ll12"
+  val_expression: "(l[0] + l[1]).pt"
+  is_required: true
+
+- name: "pt_ll13"
+  val_expression: "(l[0] + l[2]).pt"
+  is_required: true
+
+- name: "pt_ll23"
+  val_expression: "(l[1] + l[2]).pt"
+  is_required: true
+
+
+# ------------------------------
+# Angular separations
+# ------------------------------
+
+- name: "dR_l1l2"
+  val_expression: "l[0].deltaR(l[1])"
+  is_required: true
+
+- name: "dR_l1l3"
+  val_expression: "l[0].deltaR(l[2])"
+  is_required: true
+
+- name: "dR_l2l3"
+  val_expression: "l[1].deltaR(l[2])"
+  is_required: true
+
+- name: "dR_l1j1"
+  val_expression: "l[0].deltaR(j[0])"
+  is_required: true
+
+- name: "dR_l2j1"
+  val_expression: "l[1].deltaR(j[0])"
+  is_required: true
+
+- name: "dR_j1j2"
+  val_expression: "j[0].deltaR(j[1])"
+  is_required: false
+
+
+# ------------------------------
+# Delta phi correlations
+# ------------------------------
+
+- name: "dphi_l1met"
+  val_expression: "abs(l[0].deltaphi(met))"
+  is_required: true
+
+- name: "dphi_j1met"
+  val_expression: "abs(j[0].deltaphi(met))"
+  is_required: true
+
+- name: "dphi_l1l2"
+  val_expression: "abs(l[0].deltaphi(l[1]))"
+  is_required: true
+
+
+# ------------------------------
+# Top reconstruction proxies
+# ------------------------------
+
+- name: "m_l1j1"
+  val_expression: "(l[0] + j[0]).m"
+  is_required: false
+
+- name: "m_l2j1"
+  val_expression: "(l[1] + j[0]).m"
+  is_required: false
+
+- name: "m_l1j2"
+  val_expression: "(l[0] + j[1]).m"
+  is_required: false
+
+
+# ------------------------------
+# Global event energy scale
+# ------------------------------
+
+- name: "HT"
+  val_expression: "sum([jet.pt for jet in j])"
+  is_required: true
+
+- name: "LT"
+  val_expression: "l[0].pt + l[1].pt + l[2].pt"
+  is_required: true
+
+- name: "ST"
+  val_expression: "HT + LT + met.pt"
+  is_required: true
+
+cuts:
+
+# Exactly 3 leptons
+- val_expression: "len(l) == 3"
+  is_required: false
+
+# Lepton pt
+- val_expression: "l[0].pt >= 25."
+  is_required: false
+
+- val_expression: "l[1].pt >= 15."
+  is_required: false
+
+- val_expression: "l[2].pt >= 10."
+  is_required: false
+
+# Lepton acceptance
+- val_expression: "abs(l[0].eta) < 2.5"
+  is_required: false
+
+- val_expression: "abs(l[1].eta) < 2.5"
+  is_required: false
+
+- val_expression: "abs(l[2].eta) < 2.5"
+  is_required: false
+
+# Jets
+- val_expression: "len(j) >= 2"
+  is_required: false
+
+- val_expression: "j[0].pt >= 30."
+  is_required: false
+
+- val_expression: "j[1].pt >= 25."
+  is_required: false
+
+# Forward jet acceptance
+- val_expression: "abs(j[0].eta) < 4.5"
+  is_required: false
+
+- val_expression: "abs(j[1].eta) < 4.5"
+  is_required: false

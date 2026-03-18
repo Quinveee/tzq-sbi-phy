@@ -52,7 +52,7 @@ class PhDAG(DAG):
                 kwds["proc_dir"],
                 kwds["n_subprocesses"],
                 kwds["benchmark"],
-                kwds["reweight_card_insert"],
+                kwds.get("reweight_card_insert", "None"),
                 kwds["tmp_dir"],
                 self.filename.parent,
                 str(kwds.get("is_background", False)).lower(),

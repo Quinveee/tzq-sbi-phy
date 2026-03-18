@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# TODO: There's no need to wrap a python script in a bash file, so I can run directly the python script
+# TODO: There's no need to wrap this python script in a bash file, you can run the python script directly
 set -euo pipefail
 
 NGEN="$1"

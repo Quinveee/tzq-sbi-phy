@@ -2,16 +2,16 @@
 # runs: 6
 # n_subprocesses: 6
 
-tmp_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/share"
-log_dir: "logs/experiment_so_cht_ctw_ctb"
+tmp_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb_v2/share"
+log_dir: "logs/experiment_so_cht_ctw_ctb_v2"
 
 # 1. Setup
-setup_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/setup"
+setup_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb_v2/setup"
 setup_file: "setup.h5"
-setup_conf: "conf/experiment_so_cht_ctw_ctb/benchmarks.yml"
+setup_conf: "conf/experiment_so_cht_ctw_ctb_v2/benchmarks.yml"
 
 # 2. Event generation
-processes_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/processes"
+processes_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb_v2/processes"
 mg_dir: "/project/atlas/users/qvanenge/MG5_aMC_v3_5_1"
 
 processes:
@@ -520,19 +520,39 @@ processes:
     runs: 6
     n_subprocesses: 6
 
+  # VV + HF background noise
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/background"
+    proc_card: "back_card_mg5_sm_VV_HF_decay.dat"
+    run_card: "run_card_background.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    runs: 6
+    n_subprocesses: 12
+
+  # VV + LF background noise
+  - cards_dir: "cards/experiment_so_cht_ctw_ctb/background"
+    proc_card: "back_card_mg5_sm_VV_LF_decay.dat"
+    run_card: "run_card_background.dat"
+    param_card: "restrict_SMlimit_massless.dat"
+    pythia_card: "pythia8_card.dat"
+    benchmark: "sm"
+    runs: 6
+    n_subprocesses: 12
+
 # Delphes 
-delphes_card: "cards/experiment_so_cht/delphes_card_ATLAS.dat"
+delphes_card: "cards/experiment_so_cht_ctw_ctb/delphes_card_ATLAS.dat"
 delphes_dir: "/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/Delphes"
 ld_library_path: "/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/HEPTools/lhapdf6_py3/lib:/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/Delphes/:/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/golem95/lib/:/project/atlas/users/qvanenge/MG5_aMC_v3_5_1/HEPTools/pythia8/lib"
-root_files_dir: "/data/atlas/users/qvanenge/experiment_so_cht/root_files"
+root_files_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb_v2/root_files"
 
 # Analysis
-observables: "conf/experiment_so_cht_ctw_ctb/observables.yml"
-h5_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/h5"
+observables: "conf/experiment_so_cht_ctw_ctb_v2/observables.yml"
+h5_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb_v2/h5"
 
 # Augmentation
 augmentation: 
-  outdir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/samples"
+  outdir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb_v2/samples"
   theta0: "sampling.random_morphing_points(1000,[('gaussian',0.0,0.5),('gaussian',0.0,0.5),('gaussian',0.0,0.5)])"
   theta1: "sampling.benchmark('sm')"
   theta_test: "sampling.benchmark('sm')"

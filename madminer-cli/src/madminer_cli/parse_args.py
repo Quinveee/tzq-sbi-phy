@@ -145,7 +145,6 @@ def parse_args(args: List[str]) -> Args:
     )
     parser_gen.set_defaults(arg_handler=parse_gen)
 
-    # TODO: Delphes parsing doesn't need this many arguments, fix
     # 3. Delphes parsing
     parser_delphes = subparsers.add_parser(
         "run_delphes",

@@ -1,6 +1,7 @@
 observables:
 
   # Leptons (in order of pT)
+  # 1st lepton:
   - name: "l1_E"
     val_expression: "l[0].E"
     is_required: true
@@ -17,6 +18,7 @@ observables:
     val_expression: "l[0].pz"
     is_required: true
 
+  # 2nd lepton: 
   - name: "l2_E"
     val_expression: "l[1].E"
     is_required: true
@@ -33,6 +35,7 @@ observables:
     val_expression: "l[1].pz"
     is_required: true
 
+    # 3rd lepton:
   - name: "l3_E"
     val_expression: "l[2].E"
     is_required: true
@@ -50,6 +53,7 @@ observables:
     is_required: true
 
   # Jets (in order of pT)
+  # 1st jet:
   - name: "j1_E"
     val_expression: "j[0].E"
     is_required: true
@@ -66,6 +70,7 @@ observables:
     val_expression: "j[0].pz"
     is_required: true
 
+    # 2nd jet:
   - name: "j2_E"
     val_expression: "j[1].E"
     is_required: true
@@ -82,6 +87,7 @@ observables:
     val_expression: "j[1].pz"
     is_required: true
 
+  # 3rd jet:
   - name: "j3_E"
     val_expression: "j[2].E"
     is_required: false
@@ -98,6 +104,7 @@ observables:
     val_expression: "j[2].pz"
     is_required: false
 
+  # 4th jet:
   - name: "j4_E"
     val_expression: "j[3].E"
     is_required: false
@@ -114,6 +121,7 @@ observables:
     val_expression: "j[3].pz"
     is_required: false
 
+  # 5th jet:
   - name: "j5_E"
     val_expression: "j[4].E"
     is_required: false
@@ -130,6 +138,7 @@ observables:
     val_expression: "j[4].pz"
     is_required: false
 
+  # 6th jet:
   - name: "j6_E"
     val_expression: "j[5].E"
     is_required: false
@@ -146,6 +155,7 @@ observables:
     val_expression: "j[5].pz"
     is_required: false
 
+  # 7th jet:
   - name: "j7_E"
     val_expression: "j[6].E"
     is_required: false
@@ -162,6 +172,7 @@ observables:
     val_expression: "j[6].pz"
     is_required: false
 
+  # 8th jet:
   - name: "j8_E"
     val_expression: "j[7].E"
     is_required: false
