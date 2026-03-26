@@ -189,6 +189,15 @@ observables:
     val_expression: "j[7].pz"
     is_required: false
 
+  # Missing energy
+  - name: "met_pt"
+    val_expression: "met.pt"
+    is_required: true
+
+  - name: "met_phi"
+    val_expression: "met.phi"
+    is_required: true
+
 
 cuts: 
   # -- All pt subleading jets >= 25

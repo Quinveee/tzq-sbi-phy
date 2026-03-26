@@ -556,8 +556,8 @@ augmentation:
   theta0: "sampling.random_morphing_points(1000,[('gaussian',0.0,0.5),('gaussian',0.0,0.5),('gaussian',0.0,0.5)])"
   theta1: "sampling.benchmark('sm')"
   theta_test: "sampling.benchmark('sm')"
-  n_samples: 500000
-  n_samples_test: 10000
+  n_samples: 1000000
+  n_samples_test: 100000
   nproc: 1 # Multicore does not work
-  validation_split: 0.1
-  test_split: 0.2
+  validation_split: 0.15
+  test_split: 0.15
