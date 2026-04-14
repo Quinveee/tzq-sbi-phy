@@ -15,6 +15,7 @@ from madminer_cli.parse_cls import (
     AugmentationArgs,
     DelphesArgs,
     GenArgs,
+    PlotArgs,
     SetupArgs,
 )
 
@@ -50,6 +51,7 @@ class Runner:
             DelphesArgs: self.run_delphes,
             AnalysisArgs: self.run_analysis,
             AugmentationArgs: self.run_augmentation,
+            PlotArgs: self.run_plot,
         }
 
     def _lazy_import(
@@ -286,6 +288,25 @@ class Runner:
             n_processes=arguments.nproc,
             validation_split=validation_split,
             test_split=test_split,
+        )
+
+    def run_plot(self, arguments: PlotArgs) -> None:
+        from madminer_cli.plot import plot_process_distributions
+
+        plot_process_distributions(
+            input_files=arguments.input_files,
+            outdir=arguments.outdir,
+            dataset=arguments.dataset,
+            level=arguments.level,
+            observables=arguments.observables,
+            benchmarks=arguments.benchmarks,
+            normalize=arguments.normalize,
+            log=arguments.log,
+            n_bins=arguments.n_bins,
+            n_cols=arguments.n_cols,
+            uncertainties=arguments.uncertainties,
+            convert_to_ptetaphi=arguments.convert_to_ptetaphi,
+            plot_jet_multiplicity=arguments.plot_jet_multiplicity,
         )
 
     def run(self) -> None:

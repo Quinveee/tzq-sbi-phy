@@ -8,6 +8,7 @@ from madminer_cli.parse_cls import (
     DelphesArgs,
     DelphesSample,
     GenArgs,
+    PlotArgs,
     SetupArgs,
 )
 from madminer_cli.schemas import Benchmark, Cut, MorphingSetup, Observable, Parameter
@@ -74,6 +75,26 @@ def parse_analysis(args):
         # k_factor=args.k_factor,
         # systematics=args.systematics,
     )
+    return args
+
+
+@pack(PlotArgs)
+def parse_plot(args):
+    """Plot observable distributions for analyzed .h5 files or x_*.npy samples."""
+    from pathlib import Path
+
+    resolved: list = []
+    for f in args.input_files:
+        p = Path(f).expanduser()
+        if not p.exists():
+            raise FileNotFoundError(p)
+        if p.suffix.lower() not in {".h5", ".npy"}:
+            raise ValueError(
+                f"Unsupported input file type for plotting: {p} (expected .h5 or .npy)"
+            )
+        resolved.append(p)
+    args.input_files = resolved
+    args.outdir = Path(args.outdir).expanduser()
     return args
 
 

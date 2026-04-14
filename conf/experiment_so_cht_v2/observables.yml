@@ -12,32 +12,32 @@ observables:
   - name: "pt_j3"
     val_expression: "j[2].pt"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "pt_j4"
     val_expression: "j[3].pt"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "pt_j5"
     val_expression: "j[4].pt"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "pt_j6"
     val_expression: "j[5].pt"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "pt_j7"
     val_expression: "j[6].pt"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "pt_j8"
     val_expression: "j[7].pt"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   # |η| of the *required* jets
   - name: "eta_j1"
@@ -52,32 +52,32 @@ observables:
   - name: "eta_j3"
     val_expression: "j[2].eta"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "eta_j4"
     val_expression: "j[3].eta"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "eta_j5"
     val_expression: "j[4].eta"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "eta_j6"
     val_expression: "j[5].eta"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "eta_j7"
     val_expression: "j[6].eta"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "eta_j8"
     val_expression: "j[7].eta"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   # phi of the *required* jets
   - name: "phi_j1"
@@ -92,32 +92,32 @@ observables:
   - name: "phi_j3"
     val_expression: "j[2].phi"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "phi_j4"
     val_expression: "j[3].phi"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "phi_j5"
     val_expression: "j[4].phi"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "phi_j6"
     val_expression: "j[5].phi"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "phi_j7"
     val_expression: "j[6].phi"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   - name: "phi_j8"
     val_expression: "j[7].phi"
     is_required: false
-    val_default: -10.0
+    val_default: NaN
 
   # pt of the leptons
   - name: "pt_l1"

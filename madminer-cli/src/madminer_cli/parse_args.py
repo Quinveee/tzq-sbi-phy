@@ -13,6 +13,7 @@ from madminer_cli.parse_funs import (
     parse_augmentation,
     parse_delphes,
     parse_gen,
+    parse_plot,
     parse_setup,
 )
 
@@ -267,6 +268,107 @@ def parse_args(args: List[str]) -> Args:
         help="Fraction of events to reserve for the test partition",
     )
     parser_augmentation.set_defaults(arg_handler=parse_augmentation)
+
+    # 6. Plot parsing
+    parser_plot = subparsers.add_parser(
+        "run_plot",
+        description="""
+        Plot observable distributions for one or more analyzed files.
+        One composite figure per input file is written to <outdir>/<dataset>/<stem>.png.
+        Supported inputs are analyzed MadMiner .h5 files and morphed x_*.npy files.
+        """,
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        help=doc(parse_plot),
+    )
+    parser_plot.add_argument(
+        "input_files",
+        nargs="+",
+        type=str,
+        help="One or more analyzed .h5 files or morphed x_*.npy files",
+    )
+    parser_plot.add_argument(
+        "--outdir",
+        type=str,
+        default="images",
+        help="Base output dir for the images",
+    )
+    parser_plot.add_argument(
+        "--dataset",
+        type=str,
+        required=True,
+        help="Dataset label used as a subdir (e.g. '1d', '3d', 'experiment_so_cht')",
+    )
+    parser_plot.add_argument(
+        "--level",
+        type=str,
+        required=True,
+        choices=("particle", "feature"),
+        help="Whether the input .h5 is particle-level or feature-level; becomes a subdir",
+    )
+    parser_plot.add_argument(
+        "--observables",
+        nargs="+",
+        default=None,
+        help="Subset of observable names to plot (default: all in the file)",
+    )
+    parser_plot.add_argument(
+        "--benchmarks",
+        nargs="+",
+        default=None,
+        help=(
+            "For .h5: benchmarks to overlay (default: all). "
+            "For x_*.npy + y_*.npy: optional labels for the class overlays."
+        ),
+    )
+    parser_plot.add_argument(
+        "--normalize",
+        action="store_true",
+        help="Normalize distributions to the total cross section",
+    )
+    parser_plot.add_argument(
+        "--log",
+        action="store_true",
+        help="Draw y axes on a log scale",
+    )
+    parser_plot.add_argument(
+        "--n-bins",
+        dest="n_bins",
+        type=int,
+        default=50,
+        help="Number of histogram bins",
+    )
+    parser_plot.add_argument(
+        "--n-cols",
+        dest="n_cols",
+        type=int,
+        default=3,
+        help="Number of observable columns in the composite figure",
+    )
+    parser_plot.add_argument(
+        "--uncertainties",
+        choices=("nuisance", "none"),
+        default="none",
+        help="Whether to draw nuisance uncertainty bands",
+    )
+    parser_plot.add_argument(
+        "--convert",
+        dest="convert_to_ptetaphi",
+        action="store_true",
+        help=(
+            "Replace each <prefix>_{E,px,py,pz} quartet with <prefix>_{pt,eta,phi} "
+            "before plotting. --observables (if given) must use the converted names."
+        ),
+    )
+    parser_plot.add_argument(
+        "--plot-jet",
+        dest="plot_jet_multiplicity",
+        action="store_true",
+        help=(
+            "Also write <stem>_njets.png with the weighted distribution of the per-event "
+            "jet count, inferred from finite j<i>_E (or j<i>_pt) columns."
+        ),
+    )
+    parser_plot.set_defaults(arg_handler=parse_plot)
 
     # parse args
     arguments = parser.parse_args(args)

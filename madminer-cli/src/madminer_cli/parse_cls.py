@@ -55,6 +55,23 @@ class AnalysisArgs:
 
 
 @dataclass
+class PlotArgs:
+    input_files: List[Path]
+    outdir: Path
+    dataset: str
+    level: str
+    observables: Optional[List[str]]
+    benchmarks: Optional[List[str]]
+    normalize: bool = False
+    log: bool = False
+    n_bins: int = 50
+    n_cols: int = 3
+    uncertainties: str = "none"
+    convert_to_ptetaphi: bool = False
+    plot_jet_multiplicity: bool = False
+
+
+@dataclass
 class AugmentationArgs:
     events_file: Path
     outdir: str
@@ -68,4 +85,4 @@ class AugmentationArgs:
     test_split: float = 0.2
 
 
-Args = Union[SetupArgs, GenArgs, DelphesArgs, AugmentationArgs, AnalysisArgs]
+Args = Union[SetupArgs, GenArgs, DelphesArgs, AugmentationArgs, AnalysisArgs, PlotArgs]
