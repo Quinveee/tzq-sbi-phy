@@ -238,9 +238,6 @@ cuts:
   - val_expression: "len(j) >= 1"
     is_required: false
 
-  - val_expression: "sum([jet.btag for jet in j]) >= 1"
-    is_required: false
-
   # jet pt
   - val_expression: "pt_j1 >= 35.0"
     is_required: false
