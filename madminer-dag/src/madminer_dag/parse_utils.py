@@ -9,7 +9,6 @@ from madminer_dag.schemas import PhPhases
 
 _CREATE_STR2PHASE = {
     "generation": PhPhases.PREPARE_GENERATION,
-    "delphes": PhPhases.RUN_DELPHES,
     "analysis": PhPhases.RUN_ANALYSIS,
     "augmentation": PhPhases.RUN_AUGMENTATION,
 }
@@ -98,7 +97,6 @@ def ensure_experiment_dir(experiment_dir: Path):
 
 
 str2phase = {
-    "delphes": PhPhases.RUN_DELPHES,
     "analysis": PhPhases.RUN_ANALYSIS,
     "augmentation": PhPhases.RUN_AUGMENTATION,
 }

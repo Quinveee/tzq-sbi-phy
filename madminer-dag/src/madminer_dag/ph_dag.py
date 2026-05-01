@@ -18,8 +18,7 @@ class PhDAG(DAG):
         self.id = id
         self.phases = {
             PhPhases.PREPARE_GENERATION: self.add_prepare_generation,
-            PhPhases.RUN_GENERATION: self.add_run_generation,
-            PhPhases.RUN_DELPHES: self.add_run_delphes,
+            PhPhases.RUN_GENERATION: self.add_run_generation_delphes,
             PhPhases.RUN_ANALYSIS: self.add_run_analysis,
         }
 
@@ -61,16 +60,13 @@ class PhDAG(DAG):
         self.add_node(node, from_parent=parent_node)
         return node
 
-    def add_run_generation(self, parent_node: Optional[Node] = None, **kwds) -> Node:
+    def add_run_generation_delphes(
+        self, parent_node: Optional[Node] = None, **kwds
+    ) -> Node:
         node = Node(
-            name=f"RUN_GENERATION_{self.id}", script="submit/run_generation.sub"
+            name=f"RUN_GENERATION_DELPHES_{self.id}",
+            script="submit/run_generation_delphes.sub",
         )
-        node.add_vars({"ngen": self.id})
-        self.add_node(node, from_parent=parent_node)
-        return node
-
-    def add_run_delphes(self, parent_node: Optional[Node] = None, **kwds) -> Node:
-        node = Node(name=f"RUN_DELPHES_{self.id}", script="submit/run_delphes.sub")
         node.add_vars({"ngen": self.id})
         self.add_node(node, from_parent=parent_node)
         return node
@@ -90,6 +86,8 @@ class PhDAG(DAG):
             vars["OBSERVABLES"] = observables_override
         if h5_dir_override:
             vars["H5_DIR"] = h5_dir_override
+        if suffix:
+            vars["log_name"] = f"run_analysis{suffix.lower()}"
         node.add_vars(vars)
         self.add_node(node, from_parent=parent_node)
         return node
@@ -102,7 +100,8 @@ class PhDAG(DAG):
         observables_particles: str,
         h5_dir_particles: str,
     ) -> List[Node]:
-        """Add two parallel analysis nodes (features + particles) after parent."""
+        # Serialized features -> particles so madminer's in-place .lhe.gz
+        # decompression on shared storage can't race between the two jobs.
         features_node = self.add_run_analysis(
             parent_node=parent_node,
             observables_override=observables_features,
@@ -110,7 +109,7 @@ class PhDAG(DAG):
             suffix="_FEATURES",
         )
         particles_node = self.add_run_analysis(
-            parent_node=parent_node,
+            parent_node=features_node,
             observables_override=observables_particles,
             h5_dir_override=h5_dir_particles,
             suffix="_PARTICLES",

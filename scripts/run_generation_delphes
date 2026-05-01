@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -euo pipefail
+
+NGEN="$1"
+TEMPDIR="$2"
+MG_DIR="$3"
+DELPHES_DIR="$4"
+LD_LIBRARY_PATH="$5"
+DELPHES_CARD="$6"
+ROOT_FILES_DIR="$7"
+LOG_DIR="$8"
+
+# Delphes needs extra runtime libs from the conda env (libstdc++, libtbb, libvdt).
+# MG5 must NOT see them: conda's libgfortran ABI-conflicts with the system gfortran
+# that compiles the subprocess binaries, causing ./gensym to crash with a Fortran
+# runtime error whose "At line ..." output then surfaces in MG5 as
+# `ValueError: could not convert string to float: 'At'`.
+DELPHES_LD_LIBRARY_PATH="/data/atlas/users/qvanenge/miniforge/envs/madminer/lib:$5"
+
+FILENAME="$TEMPDIR"/procdir."$NGEN".tmp
+PROC_DIR=$(cat $FILENAME | awk '{print $1}')
+BASENAME=$(basename $PROC_DIR)
+ROOT_FILE_DIR="$ROOT_FILES_DIR"/"$BASENAME"
+
+mkdir -p $ROOT_FILE_DIR
+
+# Work entirely on HTCondor's per-job scratch dir to avoid shared-storage I/O.
+# We intentionally do NOT use $TMP here: with `getenv = True` the submit-host's
+# $TMP (often /tmp, a small tmpfs) is inherited and fills up mid-run, which
+# crashes MadGraph's Fortran subprocesses and surfaces as mysterious
+# ValueErrors during event generation.
+SCRATCH="${_CONDOR_SCRATCH_DIR:-$TMP}"
+WORK="$SCRATCH"/mgprocess
+ROOT_TMP="$SCRATCH"/rootfiles
+mkdir -p $WORK $ROOT_TMP $WORK/Cards
+
+# 1) Pull the prepared process dir down onto the worker
+cp -rv $PROC_DIR/* $WORK
+
+# 2) Generate events (MadGraph + Pythia)
+"$WORK"/madminer/run.sh $MG_DIR $WORK $LOG_DIR
+
+# 3) Run Delphes on the freshly generated hepmc (still on local scratch)
+LD_LIBRARY_PATH="$DELPHES_LD_LIBRARY_PATH" madminer --log-file "$LOG_DIR/delphes.log" run_delphes $WORK --root-files-dir $ROOT_TMP --delphes-dir $DELPHES_DIR --delphes-card $DELPHES_CARD
+
+# 4) Ship outputs back to shared storage
+cp -vfr $ROOT_TMP/* $ROOT_FILE_DIR
+cp -rfv $WORK/* $PROC_DIR

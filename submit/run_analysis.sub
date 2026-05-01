@@ -8,9 +8,9 @@ request_cpus            = 2
 request_disk            = 8GB
 request_memory          = 16GB
 
-log                     = $(LOG_DIR)/run_analysis.log
-output                  = $(LOG_DIR)/run_analysis.out
-error                   = $(LOG_DIR)/run_analysis.err
+log                     = $(LOG_DIR)/$(LOG_NAME:run_analysis).log
+output                  = $(LOG_DIR)/$(LOG_NAME:run_analysis).out
+error                   = $(LOG_DIR)/$(LOG_NAME:run_analysis).err
 
 getenv                  = True
 

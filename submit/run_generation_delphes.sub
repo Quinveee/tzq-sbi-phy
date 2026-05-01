@@ -1,0 +1,22 @@
+# Merged generation + Delphes: runs MadGraph event generation, Pythia shower,
+# and Delphes detector simulation on the same worker node. This avoids a
+# ~10GB round-trip of the process dir to shared storage between the two steps.
+# Disk/memory sized to the larger of the two original jobs (delphes).
+
+executable              = scripts/run_generation_delphes
+arguments               = $(NGEN) $(TMP_DIR) $(MG_DIR) $(DELPHES_DIR) $(LD_LIBRARY_PATH) $(DELPHES_CARD) $(ROOT_FILES_DIR) $(LOG_DIR)
+
+request_cpus            = 2
+request_disk            = 20GB
+request_memory          = 32GB
+
+log                     = $(LOG_DIR)/run_generation_delphes.log
+output                  = $(LOG_DIR)/run_generation_delphes.out
+error                   = $(LOG_DIR)/run_generation_delphes.err
+
+getenv                  = True
+
++UseOS                  = "el9"
++JobCategory            = "medium"
+
+queue 1

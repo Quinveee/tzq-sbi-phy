@@ -43,7 +43,7 @@ def parse_args(args: List[str]) -> Args:
         dest="from_phase",
         type=str,
         default="generation",
-        choices=("generation", "delphes", "analysis", "augmentation"),
+        choices=("generation", "analysis", "augmentation"),
         help="Start dag from this phase, skipping all earlier phases",
     )
 
@@ -63,7 +63,7 @@ def parse_args(args: List[str]) -> Args:
         dest="from_phase",
         type=str,
         required=True,
-        choices=("delphes", "analysis", "augmentation"),
+        choices=("analysis", "augmentation"),
         help="Phase to redo existing dag from",
     )
     redo.add_argument(
