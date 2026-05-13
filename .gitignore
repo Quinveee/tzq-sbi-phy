@@ -2,6 +2,7 @@
 .envrc
 .venv
 .vscode
+wandb/
 
 # Common ignores
 build

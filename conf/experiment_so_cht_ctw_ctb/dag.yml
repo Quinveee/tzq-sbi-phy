@@ -529,6 +529,7 @@ processes:
     benchmark: "sm"
     runs: 6
     n_subprocesses: 12
+    is_background: true
 
   # VV + LF background noise
   - cards_dir: "cards/experiment_so_cht_ctw_ctb/background"
@@ -539,6 +540,7 @@ processes:
     benchmark: "sm"
     runs: 6
     n_subprocesses: 12
+    is_background: true
 
 # Delphes 
 delphes_card: "cards/experiment_so_cht_ctw_ctb/delphes_card_ATLAS.dat"
@@ -553,11 +555,11 @@ h5_dir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/h5"
 # Augmentation
 augmentation: 
   outdir: "/data/atlas/users/qvanenge/experiment_so_cht_ctw_ctb/samples"
-  theta0: "sampling.random_morphing_points(1000,[('gaussian',0.0,0.5),('gaussian',0.0,0.5),('gaussian',0.0,0.5)])"
+  theta0: "sampling.random_morphing_points(1000,[('gaussian',0.0,0.4),('gaussian',0.0,0.4),('gaussian',0.0,0.4)])"
   theta1: "sampling.benchmark('sm')"
   theta_test: "sampling.benchmark('sm')"
-  n_samples: 1000000
+  n_samples: 1250000
   n_samples_test: 100000
   nproc: 1 # Multicore does not work
-  validation_split: 0.15
-  test_split: 0.15
+  validation_split: 0.0
+  test_split: 0.3
