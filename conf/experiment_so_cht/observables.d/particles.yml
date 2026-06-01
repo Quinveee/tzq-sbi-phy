@@ -239,41 +239,6 @@ cuts:
   #       This is very confusing and instead of `is_required` 
   #       it should be `pass_cut_on_error` or sth like that
 
-  # Cuts on the pt of the jets
-  # - val_expression: "j[0].pt >= 35.0"
-  #   is_required: false
-
-  # - val_expression: "j[1].pt >= 25.0"
-  #   is_required: false
-
-  # Cuts on the pt of the leptons
-  # - val_expression: "l[0].pt >= 27.0"
-  #   is_required: false
-
-  # - val_expression: "l[1].pt >= 10.0"
-  #   is_required: false
-
-  # - val_expression: "l[2].pt >= 10.0"
-  #   is_required: false
-
-  # |η| < 2.5 for every lepton
-  # - val_expression: "l[0].eta < 2.5"
-  #   is_required: false
-
-  # - val_expression: "l[1].eta < 2.5"
-  #   is_required: false
-
-  # - val_expression: "l[2].eta < 2.5"
-  #   is_required: false
-
-  # No more than 8 jets
-  # - val_expression: "len(j) < 9"
-  #   is_required: false
-
-  # Exactly 3 leptons (equivalent to `len(l) < 4` given cuts above)
-  # - val_expression: "len(l) == 3"
-  #   is_required: false
-
   # multiplicity
   - val_expression: "len(l) >= 3"
     is_required: false
